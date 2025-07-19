@@ -9,6 +9,8 @@ on:
 
 jobs:
   release-build:
+    # Protect against accidental trigger of the workflow
+    if: ${{ github.actor == 'shmuelamar' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
