@@ -1,6 +1,6 @@
 import bisect
 import logging
-from functools import cache, lru_cache
+from functools import cache
 from typing import Protocol
 
 import spacy
@@ -10,6 +10,7 @@ from igcs.entities import Doc, Selection
 logger = logging.getLogger(__name__)
 
 DEFAULT_SPACY_MODEL = "en_core_web_sm"
+DEFAULT_SPACY_MODEL_VERSION = "3.7.1"
 
 
 class Token(Protocol):
@@ -20,14 +21,25 @@ class Token(Protocol):
 
 
 @cache
-def load_spacy_model(model: str):
+def load_spacy_model(model: str, version: str | None):
+    try:
+        return spacy.load(model)
+    except OSError:
+        model_id = model if version is None else f"{model}-{version}"
+        logger.info(f"Installing spaCy model {model_id}...")
+        spacy.cli.download(model_id, direct=bool(version))
     return spacy.load(model)
 
 
-@lru_cache(maxsize=1_000_000)
-def spacy_tokenize(text: str, model: str = DEFAULT_SPACY_MODEL, ignore_tags=("SP",)):
+# @lru_cache(maxsize=1_000_000)
+def spacy_tokenize(
+    text: str,
+    model: str = DEFAULT_SPACY_MODEL,
+    model_version: str | None = DEFAULT_SPACY_MODEL_VERSION,
+    ignore_tags=("SP",),
+):
     """Tokenize text into tokens using spacy, by default ignore white-spaces tokens"""
-    nlp = load_spacy_model(model)
+    nlp = load_spacy_model(model, model_version)
     try:
         tokens = nlp(text)
     except UnicodeEncodeError:
