@@ -1,0 +1,5 @@
+check-manifest
+black[jupyter]
+pytest
+jupyterlab
+isort

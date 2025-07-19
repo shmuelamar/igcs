@@ -1,0 +1,96 @@
+[project]
+name = "igcs"
+version = "0.0.1"
+description = "Instruction‑Guided Content Selection toolkit and datasets"
+readme = "README.md"
+requires-python = ">=3.11"
+# SPDX‑style dual‑licence expression (PEP 639)
+license = "Apache-2.0 OR MIT"
+license-files = ["LICENSE-APACHE", "LICENSE-MIT"]
+keywords = [
+    "instruction‑guided", "content‑selection", "extractive‑summarisation",
+    "evidence‑extraction", "benchmark", "LLM", "transfer‑learning", "NLP"
+]
+
+# Author & maintainer metadata (PyPI warns if e‑mail missing)
+authors = [
+    { name = "Shmuel Amar" }
+]
+maintainers = [
+    { name = "Shmuel Amar" }
+]
+
+classifiers = [
+    # maturity / audience
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    # topics
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Text Processing :: Linguistic",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    # environment
+    "Operating System :: OS Independent",
+    # python versions
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3 :: Only",
+]
+
+# Dependencies are dynamic from requirements*.txt files.
+dynamic = ["dependencies", "optional-dependencies"]
+
+#[project.optional-dependencies]
+#train = []  # populated dynamically by setuptools
+#develop = []
+
+[project.urls]
+"Homepage" = "https://github.com/shmuelamar/igcs"
+"Bug Tracker" = "https://github.com/shmuelamar/igcs/issues"
+"Source" = "https://github.com/shmuelamar/igcs"
+
+# No CLI entry‑points for now
+
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+exclude = ["tests*"]
+
+# Dependency groups
+#  - core runtime requirements -> requirements.txt
+#  - experiment and training extras igcs[experiment] -> requirements-experiment.txt
+#  - development extras igcs[dev]  -> requirements-develop.txt
+[tool.setuptools.dynamic]
+dependencies = { file = ["requirements.txt"] }
+
+[tool.setuptools.dynamic.optional-dependencies]
+train = { file = ["requirements-experiment.txt"] }
+develop = { file = ["requirements-experiment.txt", "requirements-dev.txt"] }
+
+# Formatting & tooling configs
+[tool.isort]
+profile = "black"
+src_paths = ["src", "tests", "scripts", "examples"]
+# Skip external evaluation files from source datasets which we want to keep
+# as similar to original as possible.
+skip = [
+    "src/igcs/evaluate/scifact_rationale_selection.py",
+    "src/igcs/evaluate/aspectnews_evaluate.py",
+    "src/igcs/evaluate/openasp_eval.py",
+]
+honor_noqa = true
+
+[tool.pytest.ini_options]
+addopts = "--doctest-modules"
+doctest_optionflags = "NORMALIZE_WHITESPACE ELLIPSIS"
+testpaths = ["tests"]
+
+[tool.black]
+line-length = 100
+include = "\\.(pyi?|ipynb)$"
+target-version = ["py311"]
