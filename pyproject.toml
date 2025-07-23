@@ -1,9 +1,9 @@
 [project]
 name = "igcs"
-version = "0.0.1"
+version = "0.0.2"
 description = "Instruction‑Guided Content Selection toolkit and datasets"
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.9"
 # SPDX‑style dual‑licence expression (PEP 639)
 license = "Apache-2.0 OR MIT"
 license-files = ["LICENSE-APACHE", "LICENSE-MIT"]
