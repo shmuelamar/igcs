@@ -1,6 +1,15 @@
+<!-- PyPI -->
+[![arXiv](https://img.shields.io/badge/arXiv-2507.16922-B31B1B.svg)](http://arxiv.org/abs/2507.16922)
+[![Hugging Face Spaces](https://img.shields.io/badge/Spaces-igcs--demo-orange?logo=huggingface)][spaces-demo]
+[![Hugging Face Collection](https://img.shields.io/badge/HF_Collection-IGCS-blue?logo=huggingface)][hf-collection]
+[![PyPI version](https://img.shields.io/pypi/v/igcs.svg)](https://pypi.org/project/igcs/)
+[![PyPI - Downloads](https://img.shields.io/pypi/dm/igcs.svg)](https://pypi.org/project/igcs/)
+
+<!-- Hugging Face -->
+
 # 📝 Instruction Guided Content Selection (IGCS)
 
-This repo contains the code and dataset for the TACL paper **"A Unifying Scheme for Extractive Content Selection Tasks"**.
+This repo contains the code and dataset for the TACL paper [**"A Unifying Scheme for Extractive Content Selection Tasks"**] [arxiv‑paper].
 
 * How to use the library? follow the [getting started](#-getting-started) to use the igcs library for extractive content selection.
 * How to reproduce? If you wish to use or reproduce our work, follow the [datasets](#-datasets), [models](#-trained-models) and [training](#-training) sections below.
@@ -24,7 +33,7 @@ evidence retrieval and argument mining under the same scheme of selecting extrac
 2. For tasks requiring longer selections, LLMs consistently perform better when processing one document at a time instead of the entire set at once. This is not so much the case for tasks with short selections.
 ![Figure 2](./images/fig2-small.png)
 
-Check out the paper for more info!
+Check out the [paper][arxiv‑paper] for more info!
 
 # 🚀 Getting Started
 
@@ -51,7 +60,7 @@ pip install 'igcs[develop]'
 
 ## 🛠️ Full Example Usage
 
-Additional example, including the [demo space]() hosted in huggingface's spaces are in the [./examples/](./examples) dir.
+Additional example, including the [demo space]() hosted in [huggingface's spaces][spaces-demo] are in the [./examples/](./examples) dir.
 
 Prepare the prompt, call a model, parse the response and ground the selections:
 
@@ -135,10 +144,10 @@ Expected output (`mode` can be either exact, normalized, fuzzy match or hallucin
 
 # 🤖 Trained Models
 
-Huggingface trained models from the paper can be found at [Huggingface Hub](https://huggingface.co/collections/shmuelamar/igcs-instruction-guided-content-selection-687c92705699bb4a7ae0045e).
+Huggingface trained models from the paper can be found at the [Huggingface Hub][hf-collection].
 
 
-# 🗂️ Datasets
+# 🗂 Datasets
 
 All dataset files found under [./igcs-dataset](./igcs-dataset) dir splitted into train, dev and test.
 To prepare OpenAsp data which is currently only contains placeholders (as it contains licensed DUC datasets), 
@@ -199,7 +208,7 @@ options:
 Please follow the code in [./src/igcs/datasets](src/igcs/datasets) for recreating IGCSBench and GenCS.
 
 
-# 🏋️‍♂️ Training
+# 🏋️‍♂ Training
 
 Example training of Llama-3-8B-Instruct on GenCS-Union dataset.
 
@@ -222,6 +231,20 @@ nohup 2>&1 accelerate launch --main_process_port 31337 src/igcs/train_model/__in
     --warmup_ratio 0.06 > "train_${MODEL_CODENAME}.log" &
 ```
 
+# 📖 Citing Us
+
+```
+@misc{amar2025unifyingschemeextractivecontent,
+      title={A Unifying Scheme for Extractive Content Selection Tasks},
+      author={Shmuel Amar and Ori Shapira and Aviv Slobodkin and Ido Dagan},
+      year={2025},
+      eprint={2507.16922},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2507.16922},
+}
+```
+
 # ⚖️ License
 
 The code in this repo is available under MIT and APACHE2 dual license mode.
@@ -230,3 +253,7 @@ All datasets are provided and can be used according to their original licensing 
 ## 🤝 Contributing
 Contributions and pull requests are welcome - feel free to open a PR.
 Found a bug or have a suggestion? Please file an issue.
+
+[arxiv‑paper]: http://arxiv.org/abs/2507.16922 "A Unifying Scheme for Extractive Content Selection Tasks"
+[spaces-demo]: https://huggingface.co/spaces/shmuelamar/igcs-demo "IGCS-Demo on Huggingface Spaces"
+[hf-collection]: https://huggingface.co/collections/shmuelamar/igcs-instruction-guided-content-selection-687c92705699bb4a7ae0045e "IGCS Collection on Huggingface"
